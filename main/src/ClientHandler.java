@@ -11,13 +11,19 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         try {
+
+            // Gets users nickname
+            String clientNickname = connection.receiveMessage();
+
             while (true) {
+
                 String msgFromClient = connection.receiveMessage();
-                System.out.println("Client: " + msgFromClient);
+                System.out.println(clientNickname + ": " + msgFromClient);
 
                 connection.sendMessage("Message received!");
 
-                if (msgFromClient.equalsIgnoreCase("BYE")) {
+                if (msgFromClient.equalsIgnoreCase("QUIT")) {
+                    System.out.println(clientNickname + " has left the server.");
                     break;
                 }
             }

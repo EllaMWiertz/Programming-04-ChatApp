@@ -18,15 +18,26 @@ public class Client {
     }
 
     public void msgHandler() throws IOException {
+
+        // Allow user to choose a nickname
+        System.out.println("Please enter a nickname: ");
+
+        String nickname = scanner.nextLine();
+        connection.sendMessage(nickname);
+        System.out.println(nickname + " has entered the chat.");
+
         // Keep running until msgToSend equal 'bye'
         while (true) {
+
             String msgToSend = scanner.nextLine(); // reads input from the console
             connection.sendMessage(msgToSend);
 
             String reply = connection.receiveMessage();
             System.out.println("Server: " + reply);
 
-            if (msgToSend.equalsIgnoreCase("BYE")) {
+            // Allows client to leave the server
+            if (msgToSend.equalsIgnoreCase("QUIT")) {
+                System.out.println(nickname + " has left the chat");
                 break;
             }
         }
